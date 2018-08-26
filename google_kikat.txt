@@ -1,0 +1,50 @@
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args)  {
+        Scanner sc = new Scanner(System.in);
+        long test = sc.nextLong(),j=1;
+        while(test>0){
+            long n,k;
+            int i=0;
+            n=sc.nextLong();
+            k=sc.nextLong();
+           TreeMap<Long, Long> tmap =
+                     new TreeMap<Long, Long>();
+            for(i=0;i<n;i++){
+                long key = sc.nextLong();
+                if( tmap.containsKey(key)){
+                    tmap.put(key,tmap.get(key)+1);
+                }
+                else 
+                    tmap.put(key,1l);
+            }
+            long count = 0, day = 1;
+            for(Map.Entry m:tmap.entrySet()){  
+                long l = tmap.get(m.getKey());
+               while((Long.parseLong(m.getKey().toString()) >= day )&& tmap.get(m.getKey()) > 0){
+                    if( tmap.get(m.getKey()) >= k){
+                        tmap.put(Long.parseLong(m.getKey().toString()), tmap.get(m.getKey())-k);
+                         count  = count + k;
+                    }
+                    else
+                    {
+                        count  = count +  tmap.get(m.getKey());
+                        tmap.put(Long.parseLong(m.getKey().toString()),0l);
+                        }
+            //        System.out.println("#"+day+" "+count);
+                   
+   //System.out.println("@"+m.getKey()+" "+ tmap.get(m.getKey())+" +"+l); 
+                    day++;
+                }
+                   
+                //Long.parseLong(arr.get(y).toString()); 
+  }  
+            System.out.println("Case #"+j+": "+count);
+                 
+            test--;
+            j++;
+        }
+        
+    }
+}
