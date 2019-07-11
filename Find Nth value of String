@@ -1,0 +1,72 @@
+package com.org.guest;
+import java.io.*;
+import java.lang.reflect.Array;
+import java.util.*;
+
+
+public class TestClass {
+    public static void main(String[] args) throws IOException {
+        Scanner sc=new Scanner(System.in);
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter wr = new PrintWriter(System.out);
+       // String in_ = Integer.parseInt(br.readLine().trim());
+         int N = sc.nextInt();
+         int X = sc.nextInt();
+         long K = sc.nextLong();
+         String S = sc.next();
+         System.out.println(S);
+         String out_ = Find_It(X, K, S, N);
+         System.out.println(out_);
+
+         wr.close();
+         br.close();
+    }
+    static String Find_It(int X, long K, String S, int N){
+        // Write your code here
+    	 char tempArray[] = S.toCharArray();
+    	 List<String> subString = new ArrayList<>();
+    	 int[] stringSize = new int[X];
+    	 int i=0,l=0,j=0;
+    	 long sum = 1;
+    	 while(i<N){
+    		  j = i;
+    		 String str="";
+    		 if(i+X<N)
+    		 i = i+X;
+    		 else
+    			 i=N;
+    		 while(j<i){
+    			 if(!str.contains(""+tempArray[j])){
+    				 str+=""+tempArray[j];
+    			 }
+    			 j++;
+    		 }
+    		 char tempStr[] = str.toCharArray();
+    		 Arrays.sort(tempStr);
+    		subString.add(String.valueOf(tempStr));
+    		stringSize[l] = str.length();
+    		if(l>0)
+    		sum  = sum * stringSize[l];
+    		l++;
+    		if(i==N||i>N)
+    			break;
+    	 }
+    	 String str = "";
+    	 i = 0; l = 0;
+    	 while(i<N/X){
+    		 if((int)K%(int)sum==0){
+    			 j = (int)(K/sum);
+    		 }else{
+    			 j = (int)(K/sum + 1);
+    		 }
+    		 K = K - (((K/sum)-1)*sum);
+    		 if(j>0)
+    			 j=j-1;
+    		 str = str+subString.get(i).charAt(j);
+    		 sum = sum/stringSize[i];
+     		
+    		 i++;
+    	 }
+    return str;
+    }
+}
