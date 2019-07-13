@@ -1,0 +1,50 @@
+process.stdin.resume();
+process.stdin.setEncoding("utf-8");
+var stdin_input = "";
+process.stdin.on("data", function (input) {
+    stdin_input += input;                               // Reading input from STDIN
+});
+ 
+process.stdin.on("end", function () {
+   main(stdin_input);
+});
+    
+function main(input) {
+    var data = input.split('\n');
+    var N = parseInt(data[0]);
+    var S = data[1].split(' ')
+    var V = [];
+    var maxT = 0,temp;
+    for(var V_i=0; V_i<N; V_i++)
+        V.push(parseInt(S[V_i]));
+    var Q = parseInt(data[2]);
+        var T = [];
+    for(var T_i=0; T_i<Q; T_i++){
+        temp = parseInt(data[T_i+3])
+        T.push(temp);
+        if(maxT<temp)
+        maxT=temp;
+    }
+    solve(N, V, Q, T,maxT);
+}
+    
+    
+function solve(N, V, Q, T, maxT){
+    var dis = [];
+        var d = 0,i;
+    for(i =1;i<=maxT;i++){
+        for(var j = 0;j<V.length;j++){
+            var sum = 0;
+            for(var k = 0;k<V.length;k++){
+                sum = sum + Math.abs((V[j]*i)-(V[k]*i));
+            }
+            d = d + sum;
+        }
+        dis.push(d);
+    }
+    for(i =0;i<T.length;i++){
+        console.log(dis[T[i]-1]);
+    }
+    //Write your code here
+    //To print use  console.log();
+}
