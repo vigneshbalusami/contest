@@ -1,0 +1,87 @@
+/* 
+ * Enter your code here. Read input from STDIN. Print your output to STDOUT. 
+ * Your class should be named CandidateCode.
+*/
+
+
+import java.io.*;
+import java.util.*;
+public class CandidateCode {
+    private static int tortoise;
+    private static int hare;
+    private static int total;
+    private static Map<Integer,List<Integer>> shotPath = new TreeMap<>();
+    public static void main(String args[] ) throws Exception {
+
+    	int n,m,u=0,v,t,h,i=0;
+        Scanner sc =  new Scanner(System.in);
+        n = sc.nextInt();
+        m = sc.nextInt();
+        Map<Integer,List<List<Integer>>> mp = new HashMap();
+        List<List<Integer>> arr = new ArrayList<>();
+        List<Integer> time = new ArrayList<>();
+        for(i=0;i<m;i++){
+            time = new ArrayList<>();
+            u = sc.nextInt();
+            v = sc.nextInt();
+            t = sc.nextInt();
+            h = sc.nextInt();
+            time.add(v);
+            time.add(t);
+            time.add(h);
+               
+            if(mp.get(u)!=null){
+                arr = mp.get(u);
+                arr.add(time);
+            }
+            else{
+                 arr = new ArrayList<>();
+                arr.add(time);
+            }
+            mp.put(u,arr);
+        }
+         tortoise = 0;
+        hare = 0;
+        total = 999999999;
+        for(Map.Entry<Integer,List<List<Integer>>> entry : mp.entrySet()){            
+        shortestPath(mp,entry.getKey(),new ArrayList<>(),0,0,0);
+        }
+        for(Map.Entry<Integer,List<Integer>> entry : shotPath.entrySet()){
+           List<Integer> path = entry.getValue();
+            total = 0;
+            tortoise = entry.getKey();
+            for( i = 0;i<path.size();i++){
+            	if(total<path.get(i))
+            		total = path.get(i);
+            }
+            break;
+        }
+        System.out.print(tortoise+" "+total);
+   }
+   public static void shortestPath(Map<Integer,List<List<Integer>>> mp,int u,List<Integer> visited, int max,int t, int h){
+       if(visited.contains(u)){
+           if(total>max)
+            total = max;
+             List<Integer> distance = new ArrayList<>(visited);
+            
+            if(shotPath.get(max)!=null){
+                distance = shotPath.get(max);
+            }
+            distance.add(Math.abs(h-t));
+            shotPath.put(max,distance);
+       }
+       else if(!visited.contains(u)){
+            List<Integer> visit = new ArrayList<>(visited);
+            
+            Collections.copy( visited,visit);
+                 visit.add(u);
+            if(total<max)
+            total = max;
+            List<List<Integer>> path = mp.get(u);
+            for(int i = 0;i<path.size();i++){
+                List<Integer> value = path.get(i);
+                shortestPath(mp,value.get(0),visit,max+1,t+value.get(1),h+value.get(2));
+            }
+        }
+   }
+}
