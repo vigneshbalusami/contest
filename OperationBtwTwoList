@@ -1,0 +1,75 @@
+	package com;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+public class Solution {
+	public static void main(String rgs[]){
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt(),i=0;
+		while(i<t){
+			int n = sc.nextInt(),m = sc.nextInt(),j=0,x;
+			List<Integer> A = new ArrayList<>();
+			List<Integer> B = new ArrayList<>();
+			for(j=0;j<n;j++){
+				int value = sc.nextInt();
+				if(!A.contains(value))
+				A.add(value);
+			}
+			for(j=0;j<m;j++){
+				int value = sc.nextInt();
+				if(!B.contains(value))
+				B.add(value);
+			}
+			x = sc.nextInt();
+			SortedSet finalSet = findSet(A,B,x);
+			System.out.println(finalSet.toString().replace('[', '{').replace(']','}'));
+			t--;
+		}
+	}
+	public static SortedSet findSet(List<Integer> A,List<Integer> B,int x){
+		SortedSet finalSet = new TreeSet();
+		int i=0;
+		switch(x){
+		case 1:{
+			A.retainAll(B);
+			finalSet.addAll(A);
+			break;
+		}
+		case 2:{
+			A.addAll(B);
+			finalSet.addAll(A);
+			break;
+		}
+		case 3:{
+			List<Integer> C = new ArrayList<>(A);
+			C.retainAll(B);
+			A.removeAll(C);
+			B.removeAll(C);
+			finalSet.addAll(A);
+			finalSet.addAll(B);
+			break;
+		}
+		case 4:{
+			List<Integer> C = new ArrayList<>(A);
+			C.retainAll(B);
+			A.removeAll(C);
+			finalSet.addAll(A);
+			
+			break;
+		}
+		case 5:{
+			List<Integer> C = new ArrayList<>(A);
+			C.retainAll(B);
+			B.removeAll(C);
+			finalSet.addAll(B);
+			break;
+		}
+		}
+		return finalSet;
+	}
+}
