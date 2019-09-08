@@ -45,7 +45,8 @@ public class MergeString {
 						if(count<c){
 							count = c;
 							break;
-						}
+						}else if(c!=0)
+							break;
 					}else{
 						if(l1-i>j)
 							i++;
@@ -79,7 +80,8 @@ public class MergeString {
 						if(count<c){
 							count = c;
 							break;
-						}
+						}else if(c!=0)
+							break;
 					}else{
 						if(l1-i>j)
 							i++;
@@ -113,7 +115,8 @@ public class MergeString {
 						if(count<c){
 							count = c;
 							break;
-						}
+						}else if(c!=0)
+							break;
 					}else{
 						if(l1-i>j)
 							i++;
@@ -129,9 +132,7 @@ public class MergeString {
 				}
 			}
 			
-			System.out.print((l1+l2)-count);
-				
-			System.out.println(count);
+			System.out.println((l1+l2)-count);
 			t--;
 		}
 	}
@@ -143,9 +144,13 @@ public class MergeString {
 
 
 /*
+2
 ababc
 bcabc
 cdefg
-abhgf
+abgfe
+
+8
+7
 
 */
