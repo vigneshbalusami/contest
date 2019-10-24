@@ -1,0 +1,60 @@
+package com.org;
+
+import java.util.Scanner;
+
+public class LCS {
+	public static char[] rev(char str[]){
+		int len = str.length;
+		char reverse[] = new char[len];
+		for(int i = 0,j = len -1; i < len; i++,j--){
+			reverse[i] = str[j];
+		}
+		return reverse;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int n = 1;
+		Scanner sc = new Scanner(System.in);
+		n = sc.nextInt();
+		String str = sc.next();
+		int arr[][] = new int[n][n];
+		char  normal[] = str.toCharArray();
+		int lscCount = findLCS(normal,rev(normal));
+		System.out.print(n-lscCount);
+	}
+	public static int findLCS(char[] normal, char rev[]){
+		int len = normal.length,max=0;
+		
+		int countArray[][] = new int[len+1][len+1];
+		for(int i = 0; i <= len; i++){
+			countArray[i][0] = 0;
+			countArray[0][i] = 0;
+		}
+		
+		for(int i = 1; i <= len; i++){
+			for(int j = 1 ;j <= len; j++){
+				max = 0;
+				if(normal[i-1]==rev[j-1]){
+					max = 1;
+					if(i-1>0&&j-1>0)
+						max = countArray[i-1][j-1] + 1;
+				}else{
+					if(i-1>0){
+						max = countArray[i-1][j];
+					}
+					if(j-1>0){
+						max = max < countArray[i][j-1] ? countArray[i][j-1] : max;
+					}
+				}
+				countArray[i][j] = max;
+			}
+		}
+		/*for(int i = 0; i <= len; i++){
+			for(int j = 0 ;j <= len; j++){
+				System.out.print(countArray[i][j]+" ");
+			}
+			System.out.println("");
+		}*/
+		return countArray[len][len];
+	}
+}
